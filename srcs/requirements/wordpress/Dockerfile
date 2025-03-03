@@ -40,5 +40,12 @@ COPY ./requirements/wordpress/conf/wp-config-create.sh .
 RUN	sh wp-config-create.sh && rm wp-config-create.sh && \
 	chmod -R 0777 wp-content/
 
-CMD ["/usr/sbin/php-fpm83", "-F"] 	
+RUN apk add php php-json php-phar php-mbstring php-iconv
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
+COPY ./requirements/wordpress/conf/user_init.sh ..
+RUN chmod 777 ../user_init.sh
+ENTRYPOINT sh ../user_init.sh
 	
