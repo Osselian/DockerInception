@@ -31,6 +31,5 @@ fclean:
 	@docker network prune --force
 	@docker volume prune --force
 	@sudo rm -rf ~/data
-	#@sudo rm -rf ~/data/mariadb/*
 
 .PHONY	: all build down re clean fclean
